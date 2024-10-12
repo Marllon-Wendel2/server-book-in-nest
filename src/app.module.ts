@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthUserModule } from './auth-user/auth-user.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
       dbName: 'club-livros',
     }),
     UserModule,
+    AuthUserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -2,9 +2,9 @@ import { User } from './../schemas/user.schemas';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
-import { CreateUserDto } from 'src/dtos/create-user.dto';
+import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { UpdateUserDto } from 'src/dtos/update-user.dto';
+import { UpdateUserDto } from 'src/user/dtos/update-user.dto';
 
 @Injectable()
 export class UserService {
