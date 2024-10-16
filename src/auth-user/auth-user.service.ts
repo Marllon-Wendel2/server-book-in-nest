@@ -4,14 +4,21 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/user/schemas/user.schemas';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthUserService {
-  constructor(@InjectModel('User') private userModel: Model<User>) {}
+  constructor(
+    @InjectModel('User') private userModel: Model<User>,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async auth(
     authUserDto: AuthUserDto,
-  ): Promise<{ success: boolean; message: string }> {
+  ): Promise<
+    | { success: boolean; message: string }
+    | { success: boolean; message: string; token: string }
+  > {
     try {
       const user = await this.userModel.findOne({
         usuario: authUserDto.usuario,
@@ -27,12 +34,18 @@ export class AuthUserService {
         if (!isMatch) {
           return { success: false, message: 'Não foi possível autenticar.' };
         } else {
-          return { success: true, message: 'Autenticado com sucesso.' };
+          const token = await this.generatesJWT(user);
+          return { success: true, message: 'Autenticado com sucesso.', token };
         }
       }
     } catch (error) {
       const erroMenssage = (error as Error).message;
       return { success: false, message: erroMenssage };
     }
+  }
+
+  async generatesJWT(user: User) {
+    const payload = { usuario: user.usuario };
+    return this.jwtService.sign(payload);
   }
 }
