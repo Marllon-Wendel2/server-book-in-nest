@@ -5,6 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthUserModule } from './auth-user/auth-user.module';
+import { EmailConfirmationModule } from './email-confirmation/email-confirmation.module';
+import { NodemailerService } from './nodemailer/nodemailer.service';
+import { NodemailerModule } from './nodemailer/nodemailer.module';
 
 @Module({
   imports: [
@@ -14,8 +17,10 @@ import { AuthUserModule } from './auth-user/auth-user.module';
     }),
     UserModule,
     AuthUserModule,
+    EmailConfirmationModule,
+    NodemailerModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, NodemailerService],
 })
 export class AppModule {}

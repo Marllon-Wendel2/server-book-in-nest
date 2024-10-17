@@ -61,6 +61,22 @@ export class UserService {
     }
   }
 
+  async getUserByEmail(
+    email: string,
+  ): Promise<
+    { success: boolean; user: User } | { success: boolean; message: string }
+  > {
+    try {
+      const user = await this.userModel.findOne({ email });
+      return { success: true, user };
+    } catch (error) {
+      return {
+        success: false,
+        message: `Erro ao buscar usuário: ${(error as Error).message}`,
+      };
+    }
+  }
+
   async updateUser(
     id: string,
     updateUserDto: UpdateUserDto,

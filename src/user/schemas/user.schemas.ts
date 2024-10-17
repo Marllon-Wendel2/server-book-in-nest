@@ -22,6 +22,12 @@ export class User {
 
   @Prop()
   perfil: number;
+
+  @Prop({ default: false })
+  emailConfirmed: boolean;
+
+  @Prop()
+  confimationToken?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
