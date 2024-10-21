@@ -1,4 +1,4 @@
-import { Comentario } from '../entities/comentarios.schemas';
+import { Comentario } from '../schemas/comentarios.schemas';
 
 export class CreateBookDto {
   titulo: string;

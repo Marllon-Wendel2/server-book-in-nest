@@ -9,6 +9,7 @@ import { EmailConfirmationModule } from './email-confirmation/email-confirmation
 import { NodemailerService } from './nodemailer/nodemailer.service';
 import { NodemailerModule } from './nodemailer/nodemailer.module';
 import { BooksModule } from './books/books.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BooksModule } from './books/books.module';
     EmailConfirmationModule,
     NodemailerModule,
     BooksModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService, NodemailerService],

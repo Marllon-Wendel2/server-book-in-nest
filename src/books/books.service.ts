@@ -3,7 +3,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
-import { Book } from './entities/book.schemas';
+import { Book } from './schemas/book.schemas';
 
 @Injectable()
 export class BooksService {
