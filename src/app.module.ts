@@ -8,6 +8,7 @@ import { AuthUserModule } from './auth-user/auth-user.module';
 import { EmailConfirmationModule } from './email-confirmation/email-confirmation.module';
 import { NodemailerService } from './nodemailer/nodemailer.service';
 import { NodemailerModule } from './nodemailer/nodemailer.module';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { NodemailerModule } from './nodemailer/nodemailer.module';
     AuthUserModule,
     EmailConfirmationModule,
     NodemailerModule,
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [AppService, NodemailerService],
