@@ -19,18 +19,19 @@ export class ChatGateway
 
   constructor(private readonly chatService: ChatService) {}
 
-  // @SubscribeMessage('message')
-  // handleMessage(client: Socket, payload: string): void {
-  //   client.emit('message', { payload, id: client.id });
-  // }
+  @SubscribeMessage('message')
+  handleMessage(client: Socket, payload: string): void {
+    client.emit('message', { payload, id: client.id });
+  }
 
   @SubscribeMessage('books')
   async handleBook(client: Socket): Promise<void> {
     try {
       const books = await this.chatService.getAllMessages();
+      const comentarios =  books[0].comentarios
       this.logger.log(`Received message from ${client.id}`);
       this.logger.log(books);
-      client.emit('books', books);
+      client.emit('books', comentarios);
     } catch (error) {
       this.logger.error('Error fetching books', error);
     }
