@@ -49,12 +49,6 @@ export class ChatGateway
     }
   }
 
-  @SubscribeMessage('ping')
-  handlePing(client: Socket, data: string): void {
-    this.logger.log(`Received ping from ${client.id}`);
-    this.server.emit('pong', 'OK');
-  }
-
   afterInit(server: Server) {
     this.logger.log('Servidor ws criado com seucesso');
   }
