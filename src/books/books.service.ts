@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
@@ -22,6 +23,28 @@ export class BooksService {
     } catch (error) {
       const erroMenssage = error as Error;
       return { success: false, message: erroMenssage.message };
+    }
+  }
+
+  async createComent(id: string, autor: string, conteudo: string) {
+    try {
+      await this.bookModel.updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            comentarios: {
+              autor,
+              conteudo,
+            },
+          },
+        },
+      );
+      return { sucess: true, message: 'mensagem inserida' };
+    } catch (error) {
+      return {
+        success: false,
+        message: `Erro ao buscar usuário: ${(error as Error).message}`,
+      };
     }
   }
 

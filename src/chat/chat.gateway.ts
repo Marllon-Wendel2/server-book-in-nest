@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import {
+  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
@@ -24,13 +25,24 @@ export class ChatGateway
     client.emit('message', { payload, id: client.id });
   }
 
+  @SubscribeMessage('Send')
+  async handleNewMenssage(
+    client: Socket,
+    @MessageBody() data: { id: string; autor: string; message: string },
+  ): Promise<void> {
+    const { id, autor, message } = data;
+    await this.chatService.addMessage(id, autor, message);
+  }
+
   @SubscribeMessage('books')
-  async handleBook(client: Socket): Promise<void> {
+  async handleBook(client: Socket, title: string): Promise<void> {
     try {
       const books = await this.chatService.getAllMessages();
-      const comentarios =  books[0].comentarios
+      const titleFormated = title.toLowerCase();
+      const comentarios = books.filter((book) =>
+        book.titulo.toLowerCase().includes(titleFormated),
+      );
       this.logger.log(`Received message from ${client.id}`);
-      this.logger.log(books);
       client.emit('books', comentarios);
     } catch (error) {
       this.logger.error('Error fetching books', error);

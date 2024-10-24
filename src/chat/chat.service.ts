@@ -6,7 +6,13 @@ import { Injectable } from '@nestjs/common';
 export class ChatService {
   constructor(private readonly bookService: BooksService) {}
 
-  addMessage(message: string) {}
+  async addMessage(id: string, autor: string, message: string) {
+    try {
+      await this.bookService.createComent(id, autor, message);
+    } catch (error) {
+      return error;
+    }
+  }
 
   async getAllMessages(): Promise<Book[]> {
     return await this.bookService.findAll();
